@@ -1,3 +1,3 @@
-require "./tempodb_proxy"
+require "./conair"
 
 run Sinatra::Application
