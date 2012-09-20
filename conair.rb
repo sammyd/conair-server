@@ -9,7 +9,11 @@ API_KEY = "cc0c654d01774b128c1e0495de51784b"
 API_SECRET = "a280c43f6b27400998a4aba0b1eb4545"
 
 get '/' do
-  File.read(File.join('public', 'index.html'))
+  haml :index
+end
+
+get '/history/?' do
+  haml :history
 end
 
 get '/data/?' do

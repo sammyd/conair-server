@@ -5,5 +5,6 @@ group :development do
 end
 
 gem 'sinatra'
+gem 'haml'
 gem 'thin'
 gem 'tempodb'
