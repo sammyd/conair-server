@@ -36,9 +36,16 @@
 
     .container
       .columns{ class: "sixteen" }
-        %h1{ class: "remove-bottom", style: "margin-top: 40px" }
-          ConAir
-        %h5 ScottLogic, Bristol
+        .row
+          .columns{ class: "four" }
+            %h1{ class: "remove-bottom", style: "margin-top: 40px" }
+              ConAir
+            %h5 ScottLogic, Bristol
+          .column{ class: "eight" }
+            %nav.main
+              %ul
+                %li= link_to "/", "Home"
+                %li= link_to "/history", "Historical"
         %hr
       .columns{ class: "sixteen" }
         = yield

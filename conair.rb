@@ -8,6 +8,15 @@ require 'tempodb'
 API_KEY = "cc0c654d01774b128c1e0495de51784b"
 API_SECRET = "a280c43f6b27400998a4aba0b1eb4545"
 
+
+helpers do
+    def link_to(url,text=url,opts={})
+      attributes = ""
+      opts.each { |key,value| attributes << key.to_s << "=\"" << value << "\" "}
+      "<a href=\"#{url}\" #{attributes}>#{text}</a>"
+    end
+end
+
 get '/' do
   haml :index
 end

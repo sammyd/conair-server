@@ -1,43 +1,34 @@
 #chart {
-    margin-bottom: 30px;
-    position: relative;
-}
+  margin-bottom: 30px;
+  position: relative; }
 
 .axis {
-    font: 10px sans-serif;
-}
+  font: 10px sans-serif; }
 
 .axis text {
-    -webkit-transition: fill-opacity 250ms linear;
-}
+  -webkit-transition: fill-opacity 250ms linear; }
 
 .axis path {
-  display: none;
-}
+  display: none; }
 
 .axis line {
   stroke: #000;
-  shape-rendering: crispEdges;
-}
+  shape-rendering: crispEdges; }
 
 .horizon, .comparison {
   border-bottom: solid 1px #000;
   overflow: hidden;
-  position: relative;
-}
+  position: relative; }
 
 .horizon, .comparison {
   border-top: solid 1px #000;
-  border-bottom: solid 1px #000;
-}
+  border-bottom: solid 1px #000; }
 
 .horizon + .horizon {
-  border-top: none;
-}
+  border-top: none; }
 
 canvas {
-  display: block;
-}
+  display: block; }
 
 .title,
 .value {
@@ -45,24 +36,43 @@ canvas {
   line-height: 30px;
   margin: 0 6px;
   position: absolute;
-  text-shadow: 0 1px 0 rgba(255,255,255,.5);
-  white-space: nowrap;
-}
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  white-space: nowrap; }
 
 .horizon .title {
-  left: 0;
-}
+  left: 0; }
 
 .value {
-  right: 0;
-}
+  right: 0; }
 
 .comparison .value.primary {
-    display: none;
-}
+  display: none; }
 
 .line {
   background: #000;
   opacity: .2;
-  z-index: 2;
-}
+  z-index: 2; }
+
+/* =Navigation Bar
+-------------------------------------------------------------- */
+nav.main {
+  display: block;
+  margin-top: 50px;
+  margin-left: 50px;
+  color: #181818;
+  font-family: "Georgia", "Times New Roman", serif;
+  font-weight: normal;
+  font-size: 26px; }
+  nav.main ul {
+    list-style: none;
+    display: inline-block; }
+  nav.main li {
+    float: left;
+    position: relative;
+    margin-left: 10px;
+    margin-right: 40px; }
+  nav.main a {
+    text-decoration: none; }
+    nav.main a:hover {
+      background-color: #989898;
+      color: #e8e8e8; }

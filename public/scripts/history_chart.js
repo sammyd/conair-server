@@ -1,27 +1,29 @@
 google.load('visualization', '1');
-google.setOnLoadCallback(drawVisualization);
+google.setOnLoadCallback(getHistoricalData);
 
 
-d3.json("/data/?start=" + start.toISOString()
+function getHistoricalData()
+{
+    var start = new Date(2012,8,15);
+    var stop = new Date();
+    var step = 5 * 60 * 1000; // 5 minutes
+    d3.json("/data/?start=" + start.toISOString()
     + "&stop=" + stop.toISOString()
     + "&step=" + step, function(data) {
         if(!data) return;
-        drawVisualisation(data.map(function(d) { return d.value; }));
+        drawVisualisation(data, start, step);
     });
+}
 
-
-function drawVisualization(data)
+function drawVisualisation(data, startTime, step)
 {
-
-    var typicalJSONData = [{"value":21.981154819143967},{"value":22.00049286768727},{"value":21.98330116592362},{"value":22.011239453378487}];
-
     // enrich data with timestamps 
-    var data = buildTable(typicalJSONData,new Date().getTime(),2 * 60 * 1000);
+    var data = buildTable(data, startTime.getTime(), step);
 
     var wrapper = new google.visualization.ChartWrapper({
                chartType: 'AnnotatedTimeLine',
                dataTable: data,
-               options: {'displayAnnotation': 'true'},
+               options: {'displayAnnotation': 'true', 'scaleType': 'maximized'},
                containerId: 'chart'
     });
 
@@ -47,7 +49,7 @@ function buildTable(typicalJSONData,startMilli,stepMilli)
     }
 
     // convert to google table
-    data.addColumn('date','Date');
+    data.addColumn('datetime','Date');
     data.addColumn('number','Temperature');
 
     for (var key in typicalJSONData)
