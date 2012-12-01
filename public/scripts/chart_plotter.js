@@ -36,18 +36,42 @@ d3.select("#chart").call(function(div) {
 
 context.on("focus", function(i) {
     format = d3.format(".1f");
-    d3.selectAll(".horizon .value").style("right", i== null ? null : context.size() - i + "px")
+    d3.selectAll(".horizon .value").style("right", i === null ? null : context.size() - i + "px")
       .text(format(primary.valueAt(Math.floor(i))) + "\u00B0C");
 });
 
 
 function temperature() {
     return context.metric(function(start, stop, step, callback) {
-        d3.json("/data/?start=" + start.toISOString()
-            + "&stop=" + stop.toISOString()
-            + "&step=" + step, function(data) {
+        d3.json("/data/?start=" + start.toISOString() +
+            "&stop=" + stop.toISOString() +
+            "&step=" + step, function(data) {
                 if(!data) return callback(new Error("unable to load data"));
-                callback(null, data.map(function(d) { return d.value; }));
+
+                // Need to deal with possible gaps in the data
+                var plotData = [];
+                var recentTS = new Date(start);
+                var fillInVal = data[0].temperature;
+                data.forEach(function(elt, idx, array) {
+                  while(recentTS < elt["ts"]) {
+                    // Simulate a point
+                    plotData.push(fillInVal);
+                    recentTS.setMilliseconds(recentTS.getMilliseconds() + step);
+                  }
+                  // Add the received data point
+                  plotData.push(elt["temperature"]);
+                  fillInVal = elt["temperature"];
+                  recentTS.setMilliseconds(recentTS.getMilliseconds() + step);
+                });
+
+                // Back-fill if required
+                while(recentTS < stop) {
+                  plotData.push(fillInVal);
+                  recentTS.setMilliseconds(recentTS.getMilliseconds() + step);
+                }
+
+                // Send the data back to be plotted
+                callback(null, plotData );
             });
     });
 }
